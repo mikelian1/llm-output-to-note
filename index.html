@@ -15,95 +15,155 @@
       --border: #283044;
       --accent: #5b8cff;
       --accent-2: #3f6ee8;
-      --ok: #4dd8a6;
-      --shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
+      --ok: #49d4a3;
+      --shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
+      --radius: 12px;
+      --toolbar-h: 38vh;
     }
     @media (prefers-color-scheme: light) {
       :root {
         --bg: #f5f7fb;
-        --panel: #ffffff;
-        --panel-2: #f3f5fa;
+        --panel: #fff;
+        --panel-2: #f2f5fa;
         --text: #1f2430;
-        --muted: #60697c;
-        --border: #d6dceb;
-        --accent: #376dff;
-        --accent-2: #2457de;
-        --ok: #12a06f;
-        --shadow: 0 8px 20px rgba(32, 48, 85, 0.08);
+        --muted: #5f6778;
+        --border: #d7dced;
+        --accent: #356bff;
+        --accent-2: #1f56de;
+        --ok: #149f70;
+        --shadow: 0 8px 20px rgba(35, 49, 89, 0.08);
       }
     }
     * { box-sizing: border-box; }
-    body {
+    html, body {
       margin: 0;
-      font-family: Inter, "SF Pro Display", "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", system-ui, sans-serif;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       background: var(--bg);
       color: var(--text);
-      padding: 24px;
+      font-family: Inter, "SF Pro Display", "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", system-ui, sans-serif;
     }
-    .wrap { max-width: 1400px; margin: 0 auto; display: grid; gap: 16px; }
-    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow); }
-    .header { padding: 20px; }
-    h1 { margin: 0 0 8px; font-size: 24px; }
-    .sub { margin: 0; color: var(--muted); }
-    .middle {
+    .app {
+      height: 100vh;
+      width: 100%;
+      padding: 16px;
       display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 16px;
-      min-height: 460px;
+      grid-template-rows: minmax(250px, var(--toolbar-h)) minmax(0, 1fr);
+      gap: 14px;
+      overflow: hidden;
     }
-    .config { padding: 16px; }
-    .group { margin-bottom: 18px; }
-    .label { font-size: 13px; color: var(--muted); margin-bottom: 10px; display: block; }
-    .seg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    .seg button {
-      background: var(--panel-2); border: 1px solid var(--border); color: var(--text); padding: 9px 8px; border-radius: 10px; cursor: pointer;
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+
+    .toolbar {
+      padding: 14px;
+      display: grid;
+      grid-template-rows: auto minmax(0,1fr);
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      min-height: 0;
+      overflow: hidden;
     }
-    .seg button.active { border-color: var(--accent); color: white; background: var(--accent); }
-    .tips { margin-top: 8px; font-size: 12px; color: var(--muted); line-height: 1.5; }
-    .map-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    select, input[type='number'] {
-      background: var(--panel-2); color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px;
+    .headline h1 { margin: 0 0 5px; font-size: 22px; }
+    .headline p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .toolbar-grid {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 10px;
+      align-items: stretch;
     }
-    .mapping-preview { margin-top: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: var(--muted); background: var(--panel-2); padding: 10px; border-radius: 10px; }
-    .ops { display: flex; gap: 8px; flex-wrap: wrap; }
-    .btn {
-      border: 1px solid var(--border); background: var(--panel-2); color: var(--text); border-radius: 10px; padding: 9px 12px; cursor: pointer;
+    .tool-group {
+      min-height: 0;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+      align-content: start;
     }
+    .label { font-size: 12px; color: var(--muted); }
+    .seg { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; }
+    .seg button, .btn, select, input[type='number'] {
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 8px 9px;
+      font-size: 13px;
+    }
+    .seg button, .btn { cursor: pointer; }
+    .seg button.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .tip { font-size: 12px; color: var(--muted); line-height: 1.3; }
+    .map-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    select, input[type='number'] { min-width: 80px; }
+    .mapping-preview { font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--muted); }
+    .ops { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
     .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
     .btn.primary:hover { background: var(--accent-2); }
-    .copied { font-size: 12px; color: var(--ok); opacity: 0; transition: opacity .15s; margin-left: 4px; }
+    .copied { font-size: 12px; color: var(--ok); opacity: 0; transition: opacity .15s; }
     .copied.show { opacity: 1; }
-    .preview { padding: 16px; display: flex; flex-direction: column; }
-    .preview h2 { margin: 0 0 10px; font-size: 16px; }
-    pre {
-      margin: 0; white-space: pre-wrap; word-break: break-word; overflow: auto; background: var(--panel-2);
-      border: 1px solid var(--border); border-radius: 10px; padding: 14px; flex: 1;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; line-height: 1.45;
+
+    .workspace {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 14px;
+      overflow: hidden;
     }
-    .content { padding: 16px; }
-    .content textarea {
-      width: 100%; min-height: 280px; resize: vertical; background: var(--panel-2); color: var(--text);
-      border: 1px solid var(--border); border-radius: 10px; padding: 12px; font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    .pane {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0,1fr);
+      overflow: hidden;
+      padding: 12px;
+      gap: 10px;
     }
-    @media (max-width: 980px) { .middle { grid-template-columns: 1fr; } }
+    .pane h2 { margin: 0; font-size: 15px; }
+    textarea, pre {
+      width: 100%;
+      min-height: 0;
+      height: 100%;
+      margin: 0;
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      overflow: auto;
+      font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    textarea { resize: none; }
+
+    @media (max-width: 1100px) {
+      :root { --toolbar-h: 42vh; }
+      .toolbar-grid { grid-template-columns: 1fr 1fr; }
+      .tool-group:last-child { grid-column: 1 / -1; }
+      .workspace { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <section class="card header">
-      <h1>对话内容 → Markdown 知识笔记 Prompt 生成器</h1>
-      <p class="sub">配置压缩等级与标题映射，实时生成最终 Prompt。</p>
-    </section>
-
-    <section class="middle">
-      <aside class="card config">
-        <div class="group">
+  <main class="app">
+    <section class="card toolbar">
+      <div class="headline">
+        <h1>对话内容 → Markdown 知识笔记 Prompt 生成器</h1>
+        <p>固定视口布局，配置即改即生效；仅输入框与 Prompt 区可独立滚动。</p>
+      </div>
+      <div class="toolbar-grid">
+        <div class="tool-group">
           <span class="label">压缩等级</span>
           <div class="seg" id="compressionSeg"></div>
-          <div class="tips" id="compressionDesc"></div>
+          <div class="tip" id="compressionDesc"></div>
         </div>
 
-        <div class="group">
+        <div class="tool-group">
           <span class="label">标题映射</span>
           <div class="map-row">
             <select id="mapMode">
@@ -112,33 +172,35 @@
               <option value="down">下移</option>
             </select>
             <input id="mapLevel" type="number" min="1" max="3" value="1" />
-            <span style="color: var(--muted); font-size: 12px;">级</span>
+            <span class="tip">级</span>
           </div>
           <div id="mappingPreview" class="mapping-preview"></div>
         </div>
 
-        <div class="group">
+        <div class="tool-group">
           <span class="label">Prompt 操作</span>
           <div class="ops">
-            <button class="btn primary" id="copyBtn">一键复制 Prompt</button>
+            <button class="btn primary" id="copyBtn">复制 Prompt</button>
             <button class="btn" id="clearBtn">清空内容</button>
-            <button class="btn" id="resetBtn">恢复默认设置</button>
+            <button class="btn" id="resetBtn">恢复默认</button>
             <span id="copied" class="copied">Copied</span>
           </div>
         </div>
-      </aside>
+      </div>
+    </section>
 
-      <section class="card preview">
-        <h2>最终 Prompt 预览</h2>
+    <section class="workspace">
+      <section class="card pane">
+        <h2>待改写内容 {{CONTENT}}</h2>
+        <textarea id="contentInput" placeholder="在这里粘贴原始对话内容…"></textarea>
+      </section>
+
+      <section class="card pane">
+        <h2>最终 Prompt（实时预览）</h2>
         <pre id="promptPreview"></pre>
       </section>
     </section>
-
-    <section class="card content">
-      <label class="label" for="contentInput">待转换内容 {{CONTENT}}</label>
-      <textarea id="contentInput" placeholder="在这里粘贴对话内容…"></textarea>
-    </section>
-  </div>
+  </main>
 
   <script>
     const basePrompt = `你是一名“知识编译器（Knowledge Compiler）”，而不是聊天助手。你的任务不是简单压缩文本，而是将对话式回答重构为适合长期知识沉淀的高密度 Markdown 笔记。
@@ -197,81 +259,15 @@
 * 更强逻辑衔接
 * 更接近 lecture note / textbook / research memo
 
-
 # 二、Markdown 结构规则
 
-## 4. 标题层级允许重构
+## 4. 标题层级规则（由配置精确指定）
 
-不要机械保留原标题层级。
-
-标题应根据“知识结构”而不是“聊天节奏”重新组织。
-
-允许：
-
-* 删除过碎标题
-* 合并 sibling headings
-* 提升/降低标题层级
-* 将小标题降级为正文加粗
-* 自动抽象更合理的标题
-
-目标：
-
-构建语义树，而不是聊天树。
+请严格按下方“标题映射配置”执行，不要自行发挥、不要保留抽象化描述。
 
 ---
 
-## 5 标题层级偏移规则（Heading Offset Policy）
-
-不要机械保留原标题层级。
-
-标题层级应支持“整体顺延（global heading offset）”。
-
-使用以下配置：
-
-\`\`\`yaml
-heading_offset: {heading_offset}
-\`\`\`
-
-其中：
-
-* \`heading_offset = 0\`
-
-  表示保持原层级不变：
-
-  \`\`\`text
-  h1 -> h1
-  h2 -> h2
-  h3 -> h3
-  \`\`\`
-
-* \`heading_offset = +1\`
-
-  表示整体下移一级：
-
-  \`\`\`text
-  h1 -> h2
-  h2 -> h3
-  h3 -> h4
-  \`\`\`
-
-* \`heading_offset = -1\`
-
-  表示整体上移一级：
-
-  \`\`\`text
-  h2 -> h1
-  h3 -> h2
-  h4 -> h3
-  \`\`\`
-
-若层级超过 Markdown 最大标题层级：
-
-* 可自动转为加粗正文
-* 或只能保留在最大层级
-
----
-
-## 6. 列表保留策略
+## 5. 列表保留策略
 
 结构化列表通常值得保留。
 
@@ -294,7 +290,7 @@ heading_offset: {heading_offset}
 
 ---
 
-## 7. 引用块处理
+## 6. 引用块处理
 
 大多数 conversational quote block（blockquote）只是视觉强调，不是真正引用。
 
@@ -315,7 +311,7 @@ heading_offset: {heading_offset}
 
 # 三、技术内容保护规则
 
-## 8. 必须严格保留：
+## 7. 必须严格保留：
 
 * 代码块
 * 数学公式
@@ -333,7 +329,7 @@ heading_offset: {heading_offset}
 
 ---
 
-## 9. 数学与代码区域禁止“文学化”
+## 8. 数学与代码区域禁止“文学化”
 
 技术区域保持：
 
@@ -364,28 +360,10 @@ heading_offset: {heading_offset}
 ---`;
 
     const compression = {
-      never: {
-        desc: '完整保留信息',
-        prompt: `compression_level: never\n\n不要压缩原文信息，也不要主动删减内容。只进行格式重构、标题整理、段落合并和聊天语气清理。\n\n要求：\n- 保留几乎所有有效信息点。\n- 不删除解释性例子，除非明显重复或无意义。\n- 不把多个技术步骤强行概括成一句话。\n- 允许改善表达，但不得减少知识密度。\n- 适合用于“完整留档”。`
-      },
-      light: {
-        desc: '轻度整理',
-        prompt: `compression_level: light\n\n进行轻度压缩，在保持信息完整的前提下删除明显冗余表达。\n\n要求：\n- 删除聊天填充语、重复强调、情绪性表达。\n- 合并碎片化短句。\n- 保留主要例子、关键类比、重要推理过程。\n- 对重复解释只保留最清晰的一版。\n- 不牺牲技术细节。\n- 适合用于“日常知识笔记”。`
-      },
-      medium: {
-        desc: '高密度知识笔记',
-        prompt: `compression_level: medium\n\n进行中度压缩，将内容整理为更高密度的知识笔记。\n\n要求：\n- 删除大部分重复解释、过渡语、弱例子。\n- 保留核心定义、机制、流程、对比、结论。\n- 将啰嗦推理压缩为紧凑技术段落。\n- 只保留最有助于理解的例子。\n- 避免过度简写导致概念断裂。\n- 适合用于“复习型笔记 / 长期知识库”。`
-      },
-      high: {
-        desc: '极限压缩复习版',
-        prompt: `compression_level: high\n\n进行高度压缩，将原文重构为高度凝练的知识笔记。\n\n要求：\n- 删除所有聊天语气、重复解释、弱过渡句和非必要例子。\n- 只保留核心概念、关键机制、重要流程、必要对比和最终结论。\n- 将长段解释压缩为紧凑的定义、流程或要点。\n- 保留代码、公式、变量名、类名、函数名、文件路径、tensor shape 等技术细节。\n- 删除只用于辅助理解、但不影响知识结构的类比和铺垫。\n- 不要压缩到提纲化碎片，仍需保持逻辑连续。\n- 适合用于“考试复习 / 快速回顾 / 高密度知识库”。`
-      }
-    };
-
-    const titleMappingTemplates = {
-      unchanged: `heading_offset: 0\n\n标题层级整体保持不变。\n\n映射规则：\n- h1 -> h1\n- h2 -> h2\n- h3 -> h3\n- h4 -> h4\n- h5 -> h5\n- h6 -> h6\n\n允许根据知识结构微调标题内容，但不要整体改变标题层级。`,
-      up: `heading_offset: -{x}\n\n标题层级整体上移 {x} 级。\n\n映射规则：\n- h(n) -> h(n - {x})\n\n例如 x = 1：\n- h2 -> h1\n- h3 -> h2\n- h4 -> h3\n\n约束：\n- h1 不能继续上移，保持为 h1。\n- 若多个标题因上移产生层级冲突，应根据语义结构合并或重组。\n- 不要机械移动标题，最终结构仍应符合知识笔记的逻辑层级。`,
-      down: `heading_offset: +{x}\n\n标题层级整体下移 {x} 级。\n\n映射规则：\n- h(n) -> h(n + {x})\n\n例如 x = 1：\n- h1 -> h2\n- h2 -> h3\n- h3 -> h4\n\n约束：\n- 若标题层级超过 h6，可转为加粗正文，或保留为 h6。\n- 下移后应保持文档结构清晰，避免产生过深层级。\n- 不要机械移动标题，必要时可合并过碎小标题。`
+      never: { desc: '完整保留信息', prompt: `compression_level: never\n\n不要压缩原文信息，也不要主动删减内容。只进行格式重构、标题整理、段落合并和聊天语气清理。\n\n要求：\n- 保留几乎所有有效信息点。\n- 不删除解释性例子，除非明显重复或无意义。\n- 不把多个技术步骤强行概括成一句话。\n- 允许改善表达，但不得减少知识密度。\n- 适合用于“完整留档”。` },
+      light: { desc: '轻度整理', prompt: `compression_level: light\n\n进行轻度压缩，在保持信息完整的前提下删除明显冗余表达。\n\n要求：\n- 删除聊天填充语、重复强调、情绪性表达。\n- 合并碎片化短句。\n- 保留主要例子、关键类比、重要推理过程。\n- 对重复解释只保留最清晰的一版。\n- 不牺牲技术细节。\n- 适合用于“日常知识笔记”。` },
+      medium: { desc: '高密度知识笔记', prompt: `compression_level: medium\n\n进行中度压缩，将内容整理为更高密度的知识笔记。\n\n要求：\n- 删除大部分重复解释、过渡语、弱例子。\n- 保留核心定义、机制、流程、对比、结论。\n- 将啰嗦推理压缩为紧凑技术段落。\n- 只保留最有助于理解的例子。\n- 避免过度简写导致概念断裂。\n- 适合用于“复习型笔记 / 长期知识库”。` },
+      high: { desc: '极限压缩复习版', prompt: `compression_level: high\n\n进行高度压缩，将原文重构为高度凝练的知识笔记。\n\n要求：\n- 删除所有聊天语气、重复解释、弱过渡句和非必要例子。\n- 只保留核心概念、关键机制、重要流程、必要对比和最终结论。\n- 将长段解释压缩为紧凑的定义、流程或要点。\n- 保留代码、公式、变量名、类名、函数名、文件路径、tensor shape 等技术细节。\n- 删除只用于辅助理解、但不影响知识结构的类比和铺垫。\n- 不要压缩到提纲化碎片，仍需保持逻辑连续。\n- 适合用于“考试复习 / 快速回顾 / 高密度知识库”。` }
     };
 
     const state = { compression: 'medium', mode: 'unchanged', level: 1, content: '' };
@@ -403,35 +381,41 @@ heading_offset: {heading_offset}
       Object.keys(compression).forEach(key => {
         const b = document.createElement('button');
         b.textContent = key;
-        b.addEventListener('click', () => { state.compression = key; update(); });
         b.dataset.key = key;
+        b.addEventListener('click', () => { state.compression = key; update(); });
         seg.appendChild(b);
       });
     }
 
-    function buildTitleMapping() {
-      if (state.mode === 'unchanged') return titleMappingTemplates.unchanged;
-      return titleMappingTemplates[state.mode].replaceAll('{x}', String(state.level));
-    }
+    function getHeadingRule(mode, level) {
+      if (mode === 'unchanged') {
+        return {
+          text: `heading_offset: 0\n\n标题映射配置（确定性执行）：\n- 全部标题保持原层级，不做整体偏移。\n- h1 -> h1\n- h2 -> h2\n- h3 -> h3\n- h4 -> h4\n- h5 -> h5\n- h6 -> h6\n\n执行要求：\n- 不允许“提升/降低标题层级”的自由发挥。\n- 若需要结构优化，只能改标题文案，不改层级。`,
+          preview: 'h2 → h2\nh3 → h3\nh4 → h4'
+        };
+      }
+      const shift = mode === 'up' ? -level : level;
+      const map = n => `h${n} -> h${Math.max(1, Math.min(6, n + shift))}`;
+      const modeText = mode === 'up' ? `上移 ${level} 级` : `下移 ${level} 级`;
+      const boundary = mode === 'up'
+        ? '- 若上移后小于 h1，则强制保持为 h1。'
+        : '- 若下移后超过 h6，则强制保持为 h6 或转为加粗正文。';
 
-    function buildMapPreview() {
-      const x = state.mode === 'unchanged' ? 0 : state.level;
-      const sign = state.mode === 'up' ? -1 : state.mode === 'down' ? 1 : 0;
-      const map = n => {
-        const v = n + sign * x;
-        return 'h' + Math.min(6, Math.max(1, v));
+      return {
+        text: `heading_offset: ${shift > 0 ? `+${shift}` : shift}\n\n标题映射配置（确定性执行）：${modeText}\n\n逐级映射规则（按此硬性执行）：\n- ${map(1)}\n- ${map(2)}\n- ${map(3)}\n- ${map(4)}\n- ${map(5)}\n- ${map(6)}\n\n执行要求：\n- 不允许模型自行推断其它偏移策略。\n${boundary}\n- 若多个标题映射后同级，按语义重排内容顺序，但不得改变本映射规则。`,
+        preview: `h2 → h${Math.max(1, Math.min(6, 2 + shift))}\nh3 → h${Math.max(1, Math.min(6, 3 + shift))}\nh4 → h${Math.max(1, Math.min(6, 4 + shift))}`
       };
-      return `h2 → ${map(2)}\nh3 → ${map(3)}\nh4 → ${map(4)}`;
     }
 
     function buildPrompt() {
+      const heading = getHeadingRule(state.mode, state.level);
       return [
         basePrompt,
         '',
         '---',
         compression[state.compression].prompt,
         '---',
-        buildTitleMapping(),
+        heading.text,
         '---',
         '请处理以下内容：',
         state.content || '{{CONTENT}}'
@@ -442,7 +426,7 @@ heading_offset: {heading_offset}
       [...seg.querySelectorAll('button')].forEach(b => b.classList.toggle('active', b.dataset.key === state.compression));
       desc.textContent = `${state.compression}：${compression[state.compression].desc}`;
       mapLevel.disabled = state.mode === 'unchanged';
-      mappingPreview.textContent = buildMapPreview();
+      mappingPreview.textContent = getHeadingRule(state.mode, state.level).preview;
       promptPreview.textContent = buildPrompt();
     }
 
